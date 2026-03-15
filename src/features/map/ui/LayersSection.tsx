@@ -18,7 +18,7 @@ export default function LayersSection({
 }: LayersSectionProps) {
   return (
     <section className="panel-block">
-      <h2>Map Layers</h2>
+      <p className="section-summary-label">LAYERS</p>
       <label className="toggle-field">
         <span>Show buildings</span>
         <span className="theme-switch">

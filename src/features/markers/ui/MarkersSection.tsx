@@ -16,7 +16,7 @@ import {
   MIN_MARKER_SIZE,
 } from "@/features/markers/infrastructure/constants";
 import MarkerVisual from "./MarkerVisual";
-import { CheckIcon, EditIcon, TrashIcon } from "@/shared/ui/Icons";
+import { CheckIcon, EditIcon, InfoIcon, TrashIcon } from "@/shared/ui/Icons";
 import ColorPicker from "@/features/theme/ui/ColorPicker";
 import { buildDynamicColorChoices } from "@/features/theme/domain/colorSuggestions";
 import {
@@ -124,13 +124,22 @@ export default function MarkersSection() {
   );
 
   const markerRows = useMemo(
-    () =>
-      markers.map((marker, index) => ({
-        marker,
-        index,
-        icon: findMarkerIcon(marker.iconId, customMarkerIcons),
-        isExpanded: expandedMarkerId === marker.id,
-      })),
+    () => {
+      const iconCounts = new Map<string, number>();
+      return markers.map((marker, index) => {
+        const icon = findMarkerIcon(marker.iconId, customMarkerIcons);
+        const iconLabel = String(icon?.label ?? "Marker").trim() || "Marker";
+        const nextCount = (iconCounts.get(iconLabel) ?? 0) + 1;
+        iconCounts.set(iconLabel, nextCount);
+        return {
+          marker,
+          index,
+          icon,
+          markerLabel: `${iconLabel} ${nextCount}`,
+          isExpanded: expandedMarkerId === marker.id,
+        };
+      });
+    },
     [customMarkerIcons, expandedMarkerId, markers],
   );
 
@@ -172,52 +181,54 @@ export default function MarkersSection() {
 
   return (
     <section className="panel-block color-editor-screen marker-settings-screen">
-      <h2>Markers</h2>
-
-      <p className="theme-active-label">
-        {markerRows.length === 0
-          ? "Select a marker"
-          : `Editing ${markerRows.length} marker${markerRows.length === 1 ? "" : "s"}.`}
-      </p>
+      <div className="markers-section-head">
+        <p className="section-summary-label">MARKERS</p>
+        <div className="markers-section-head-actions">
+          <button
+            type="button"
+            className="theme-customize-btn"
+            onClick={toggleMarkerSettings}
+            aria-label={isSettingsOpen ? "Done with marker settings" : "Open marker settings"}
+          >
+            <span className="theme-customize-icon" aria-hidden="true">
+              {isSettingsOpen ? <CheckIcon /> : <EditIcon />}
+            </span>
+          </button>
+          <div className="marker-info-wrap marker-info-wrap--top">
+            <button
+              type="button"
+              className="icon-only-btn marker-info-btn"
+              aria-label="Marker picker help"
+            >
+              <InfoIcon />
+            </button>
+          <div className="marker-info-popover" role="tooltip">
+              Click an icon to drop a marker on the current map location.
+              Marker settings apply to all markers and can be moved directly on
+              the map. Use Edit on a marker to set exact coordinates and
+              customize color and size individually.
+            </div>
+          </div>
+        </div>
+      </div>
 
       <div className="markers-section__content">
-        <p className="markers-section__empty">
-          Click an icon to drop a marker on the current map location.
-        </p>
-
-        <MarkerPicker
-          markerColor={markerDefaults.color}
-          customIcons={customMarkerIcons}
-          onIconClick={addMarker}
-          onUploadIcon={handleUploadIcon}
-          onRemoveUploadedIcon={(iconId) =>
-            dispatch({ type: "REMOVE_CUSTOM_MARKER_ICON", iconId })
-          }
-          onClearUploadedIcons={() =>
-            dispatch({ type: "CLEAR_CUSTOM_MARKER_ICONS" })
-          }
-          actionSlot={
-            <>
-              <button
-                type="button"
-                className={`marker-picker__upload marker-settings-toggle-btn${
-                  isSettingsOpen ? " is-active" : ""
-                }`}
-                onClick={toggleMarkerSettings}
-              >
-                Marker settings
-              </button>
-              <p className="marker-settings-toggle-hint">
-                Marker settings apply to all markers. Markers can also be moved
-                directly on the map.
-              </p>
-              <p className="markers-section__hint">
-                Use <strong>Edit</strong> on a marker to set exact coordinates
-                and customize its color and size individually.
-              </p>
-            </>
-          }
-        />
+        {!isSettingsOpen ? (
+          <>
+            <MarkerPicker
+              markerColor={markerDefaults.color}
+              customIcons={customMarkerIcons}
+              onIconClick={addMarker}
+              onUploadIcon={handleUploadIcon}
+              onRemoveUploadedIcon={(iconId) =>
+                dispatch({ type: "REMOVE_CUSTOM_MARKER_ICON", iconId })
+              }
+              onClearUploadedIcons={() =>
+                dispatch({ type: "CLEAR_CUSTOM_MARKER_ICONS" })
+              }
+            />
+          </>
+        ) : null}
 
         {isSettingsOpen ? (
           <div className="marker-settings-card">
@@ -306,7 +317,7 @@ export default function MarkersSection() {
 
         {markerRows.length === 0 ? null : (
           <div className="markers-section__list">
-            {markerRows.map(({ marker, index, icon, isExpanded }) => {
+            {markerRows.map(({ marker, icon, markerLabel, isExpanded }) => {
               const markerColorChoices = buildDynamicColorChoices(
                 marker.color,
                 markerColorPalette,
@@ -328,7 +339,7 @@ export default function MarkersSection() {
                         />
                       ) : null}
                       <span className="marker-row__title">
-                        Marker {index + 1}
+                        {markerLabel}
                       </span>
                     </div>
 
