@@ -11,7 +11,7 @@ export default function GeneralHeader({ onAboutOpen }: GeneralHeaderProps) {
       <div className="desktop-brand">
         <img
           className="desktop-brand-logo brand-logo"
-          src="/assets/logo.png"
+          src="/assets/logo.svg"
           alt="TerraInk logo"
         />
         <div className="desktop-brand-copy brand-copy">
