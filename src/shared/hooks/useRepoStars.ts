@@ -86,13 +86,9 @@ export function useRepoStars(repoApiUrl: string): UseRepoStarsReturn {
     }
 
     const cachedStars = readCachedStars(finalUrl);
-    const shouldRevalidateZero = cachedStars === 0;
     if (cachedStars !== null) {
       setRepoStars(cachedStars);
       setRepoStarsLoading(false);
-      if (!shouldRevalidateZero) {
-        return undefined;
-      }
     }
 
     let cancelled = false;
