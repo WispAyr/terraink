@@ -1,6 +1,6 @@
 {
-  "name": "TerraInk",
-  "short_name": "TerraInk",
+  "name": "LocalMaps",
+  "short_name": "LocalMaps",
   "description": "Free map poster generator powered by OpenStreetMap data.",
   "id": "/",
   "start_url": "/",

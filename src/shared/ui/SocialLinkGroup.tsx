@@ -25,7 +25,7 @@ export default function SocialLinkGroup({ variant }: SocialLinkGroupProps) {
           href={repoUrl}
           target="_blank"
           rel="noreferrer"
-          aria-label="Open TerraInk repository on GitHub"
+          aria-label="Open LocalMaps repository on GitHub"
           title="GitHub repository"
         >
           <GitHubIcon />
@@ -41,7 +41,7 @@ export default function SocialLinkGroup({ variant }: SocialLinkGroupProps) {
           href={instagramUrl}
           target="_blank"
           rel="noreferrer"
-          aria-label="Follow TerraInk on Instagram"
+          aria-label="Follow LocalMaps on Instagram"
           title="Instagram"
         >
           <InstagramIcon />
@@ -53,7 +53,7 @@ export default function SocialLinkGroup({ variant }: SocialLinkGroupProps) {
           href={kofiUrl}
           target="_blank"
           rel="noreferrer"
-          aria-label="Support TerraInk on Ko-fi"
+          aria-label="Support LocalMaps on Ko-fi"
           title="Ko-fi"
         >
           <KofiIcon />
