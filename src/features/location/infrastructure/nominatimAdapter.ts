@@ -111,7 +111,7 @@ export function createNominatimAdapter(
 
     const url =
       "https://nominatim.openstreetmap.org/reverse?" +
-      `format=jsonv2&addressdetails=1&zoom=10&lat=${encodeURIComponent(String(lat))}&lon=${encodeURIComponent(String(lon))}`;
+      `format=jsonv2&addressdetails=1&zoom=14&lat=${encodeURIComponent(String(lat))}&lon=${encodeURIComponent(String(lon))}`;
 
     const response = await http.get(
       url,
