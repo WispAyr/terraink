@@ -181,7 +181,7 @@ export function posterReducer(
         ...state,
         selectedLocation: action.location,
         isLocationFocused: false,
-        displayNameOverrides: { city: false, country: false },
+        displayNameOverrides: { city: true, country: true },
         form: {
           ...state.form,
           location: action.location.label,
