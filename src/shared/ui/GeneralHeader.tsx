@@ -17,7 +17,7 @@ export default function GeneralHeader({ onAboutOpen }: GeneralHeaderProps) {
         <div className="desktop-brand-copy brand-copy">
           <h1 className="desktop-brand-title">LocalMaps</h1>
           <p className="desktop-brand-kicker app-kicker">
-            The Cartographic Poster Engine
+            Create Beautiful Map Posters
           </p>
         </div>
       </div>

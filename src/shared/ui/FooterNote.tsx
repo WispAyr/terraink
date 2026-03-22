@@ -46,8 +46,8 @@ export default function FooterNote() {
 
       <div className="desktop-footer-middle">
         <p className="made-note">
-          LocalMaps™ v{appVersion} | © 2026 | Made with{" "}
-          <span className="heart">❤︎</span> in Hannover, Germany
+          LocalMaps v{appVersion} | © 2026 Local Connect | Made with{" "}
+          <span className="heart">❤︎</span> in Ayr, Scotland
         </p>
       </div>
 
